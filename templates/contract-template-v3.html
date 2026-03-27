@@ -84,6 +84,29 @@ html, body {
   }
 }
 @page { size: A4; margin: 0; }
+@page cover { size: A4; margin: 0; }
+@page content {
+  size: A4;
+  margin: 16mm 20mm 20mm 20mm;
+  @bottom-left {
+    content: "Henosis SA · Chemin de Praël 1 · 1323 Romainmôtier · Suisse";
+    font-size: 6.5pt;
+    font-weight: 400;
+    color: #000;
+    border-top: 0.4pt solid #000;
+    padding-top: 2.5mm;
+    vertical-align: top;
+  }
+  @bottom-right {
+    content: counter(page);
+    font-size: 8pt;
+    font-weight: 700;
+    color: #000;
+    border-top: 0.4pt solid #000;
+    padding-top: 2.5mm;
+    vertical-align: top;
+  }
+}
 
 /* ============================================================
    PAGE 1 — COVER
@@ -94,6 +117,7 @@ html, body {
   height: 297mm;
   background: #fff;
   overflow: hidden;
+  page: cover;
 }
 
 /* Logo top, black, centered */
@@ -172,32 +196,8 @@ html, body {
    PAGES DE CONTENU — layout
    ============================================================ */
 .page-content {
-  padding: 16mm 20mm 24mm 20mm;
-  min-height: 297mm;
-  position: relative;
-}
-
-/* Footer */
-.page-footer {
-  position: absolute;
-  bottom: 7mm;
-  left: 20mm;
-  right: 20mm;
-  border-top: 0.4pt solid #000;
-  padding-top: 2.5mm;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-.footer-info {
-  font-size: 6.5pt;
-  font-weight: 400;
-  color: #000;
-  line-height: 1.4;
-}
-.footer-page {
-  font-size: 8pt;
-  font-weight: 700;
+  padding: 0;
+  page: content;
 }
 
 /* Dashed decorative rule */
@@ -379,7 +379,7 @@ html, body {
 </div>
 
 <!-- ============================================================
-     PAGE 2 — PARTIES · PRÉAMBULE · ACCORD (ART. 1–2)
+     CONTENU DU CONTRAT (pages fusionnées)
      ============================================================ -->
 <div class="page page-content">
 
@@ -428,17 +428,7 @@ html, body {
     <span class="item-text">L'Artiste effectuera la Prestation d'une durée approximative de {{duration}} minutes et s'engage à ne pas véhiculer de propos discriminatoires ou contraires aux mœurs.</span>
   </div>
 
-  <div class="page-footer">
-    <span class="footer-info">Henosis SA · Chemin de Praël 1 · 1323 Romainmôtier · Suisse</span>
-    <span class="footer-page">1</span>
-  </div>
-</div>
 
-
-<!-- ============================================================
-     PAGE 3 — ARTICLES 3–8
-     ============================================================ -->
-<div class="page page-content">
 
   <p class="article-heading" style="margin-top:0">Article 3 Rémunération</p>
   <div class="article-item">
@@ -490,17 +480,7 @@ html, body {
     <span class="item-text">L'Artiste remplira le formulaire Suisa avec les morceaux joués pendant la Prestation.</span>
   </div>
 
-  <div class="page-footer">
-    <span class="footer-info">Henosis SA · Chemin de Praël 1 · 1323 Romainmôtier · Suisse</span>
-    <span class="footer-page">2</span>
-  </div>
-</div>
 
-
-<!-- ============================================================
-     PAGE 4 — ARTICLES 9–11
-     ============================================================ -->
-<div class="page page-content">
 
   <p class="article-heading" style="margin-top:0">Article 9 Déclaration d'assurance</p>
   <p class="body-text">L'Artiste déclare que lui-même ainsi que les membres réalisant la Prestation possèdent une assurance maladie, une assurance accident ainsi qu'une assurance responsabilité civile valable pendant toute la durée de la Prestation.</p>
@@ -561,17 +541,7 @@ html, body {
     </div>
   </div>
 
-  <div class="page-footer">
-    <span class="footer-info">Henosis SA · Chemin de Praël 1 · 1323 Romainmôtier · Suisse</span>
-    <span class="footer-page">3</span>
-  </div>
-</div>
 
-
-<!-- ============================================================
-     PAGE 5 — FIN ART. 11 · ART. 12 · SIGNATURES
-     ============================================================ -->
-<div class="page page-content">
 
   <div class="article-sub-item" style="margin-top:0">
     <span class="sub-item-num">11.6</span>
@@ -629,10 +599,7 @@ html, body {
     <div class="signature-field">Signature</div>
   </div>
 
-  <div class="page-footer">
-    <span class="footer-info">Henosis SA · Chemin de Praël 1 · 1323 Romainmôtier · Suisse</span>
-    <span class="footer-page">4</span>
-  </div>
+
 </div>
 
 </body>
