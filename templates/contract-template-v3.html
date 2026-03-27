@@ -315,6 +315,9 @@ html, body {
 }
 
 /* Signature */
+.signature-block {
+  page-break-inside: avoid;
+}
 .separator-line {
   border: none;
   border-top: 0.4pt solid #000;
@@ -578,20 +581,22 @@ html, body {
     <span class="item-text">Pour tout litige en lien avec la présente Convention, le for est au siège de l'Organisateur.</span>
   </div>
 
-  <hr class="separator-line">
+  <div class="signature-block">
+    <hr class="separator-line">
 
-  <p class="signature-party">Pour Henosis SA :</p>
-  <div class="signature-row">
-    <div class="signature-field">Lieu</div>
-    <div class="signature-field">Date</div>
-    <div class="signature-field">Signature</div>
-  </div>
+    <p class="signature-party">Pour Henosis SA :</p>
+    <div class="signature-row">
+      <div class="signature-field">Lieu</div>
+      <div class="signature-field">Date</div>
+      <div class="signature-field">Signature</div>
+    </div>
 
-  <p class="signature-party">Pour {{artistRepresentativeBlock}} :</p>
-  <div class="signature-row">
-    <div class="signature-field">Lieu</div>
-    <div class="signature-field">Date</div>
-    <div class="signature-field">Signature</div>
+    <p class="signature-party">Pour {{artistRepresentativeBlock}} :</p>
+    <div class="signature-row">
+      <div class="signature-field">Lieu</div>
+      <div class="signature-field">Date</div>
+      <div class="signature-field">Signature</div>
+    </div>
   </div>
 
 
