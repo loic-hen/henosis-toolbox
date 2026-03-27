@@ -104,6 +104,7 @@ html, body {
   background: #fff;
   overflow: hidden;
   page: cover;
+  page-break-after: always;
 }
 
 /* Logo top, black, centered */
@@ -269,6 +270,17 @@ html, body {
   font-weight: 700;
   display: block;
   margin-bottom: 0.5mm;
+}
+
+/* Page-break rules to avoid splitting articles across pages */
+.article-heading,
+.article-item,
+.article-sub-item,
+.body-text {
+  page-break-inside: avoid;
+}
+.article-heading {
+  page-break-after: avoid;
 }
 
 /* Party block */
