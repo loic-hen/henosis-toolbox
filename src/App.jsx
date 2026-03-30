@@ -1,5 +1,11 @@
 import { useState } from 'react'
 import logo from './assets/logo.svg'
+import photo1 from '../Ressources/Images/Photos side/P1080378.jpg'
+import photo2 from '../Ressources/Images/Photos side/Nayan.jpg'
+import photo3 from '../Ressources/Images/Photos side/729A7453.jpg'
+import photo4 from '../Ressources/Images/Photos side/729A6222.png'
+import photo5 from '../Ressources/Images/Photos side/729A8406.png'
+import photo6 from '../Ressources/Images/Photos side/729A8880.png'
 
 // ─── THEME ────────────────────────────────────────────────────────────────────
 const T = {
@@ -994,6 +1000,74 @@ function Topbar({ activeModule, onModuleChange, onLogout }) {
   )
 }
 
+// ─── PHOTO MOSAIC ────────────────────────────────────────────────────────────
+const mosaicKeyframes = `
+@keyframes scrollDown {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+`
+
+const colA = [photo1, photo3, photo5, photo1, photo3, photo5]
+const colB = [photo2, photo4, photo6, photo2, photo4, photo6]
+
+function PhotoMosaic() {
+  return (
+    <>
+      <style>{mosaicKeyframes}</style>
+      <div style={{
+        position: 'fixed', top: 0, right: 0,
+        width: '20vw', height: '100vh',
+        overflow: 'hidden', zIndex: 0,
+      }}>
+        <div style={{ display: 'flex', height: '100%' }}>
+          {/* Colonne A */}
+          <div style={{ width: '50%', overflow: 'hidden' }}>
+            <div style={{
+              display: 'flex', flexDirection: 'column',
+              animation: 'scrollDown 30s linear infinite',
+            }}>
+              {colA.map((src, i) => (
+                <img key={i} src={src} style={{
+                  width: '100%',
+                  height: '33.333vh',
+                  objectFit: 'cover',
+                  display: 'block',
+                  flexShrink: 0,
+                }} />
+              ))}
+            </div>
+          </div>
+          {/* Colonne B — décalée pour l'effet mosaïque */}
+          <div style={{ width: '50%', overflow: 'hidden' }}>
+            <div style={{
+              display: 'flex', flexDirection: 'column',
+              animation: 'scrollDown 22s linear infinite',
+              marginTop: '-16.666vh',
+            }}>
+              {colB.map((src, i) => (
+                <img key={i} src={src} style={{
+                  width: '100%',
+                  height: '33.333vh',
+                  objectFit: 'cover',
+                  display: 'block',
+                  flexShrink: 0,
+                }} />
+              ))}
+            </div>
+          </div>
+        </div>
+        {/* Dégradé gauche pour fondu vers le contenu */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: `linear-gradient(to right, ${T.bg} 0%, transparent 30%)`,
+          pointerEvents: 'none',
+        }} />
+      </div>
+    </>
+  )
+}
+
 // ─── DASHBOARD ────────────────────────────────────────────────────────────────
 function Dashboard({ onLogout }) {
   const [activeModule, setActiveModule] = useState('contrats')
@@ -1009,11 +1083,15 @@ function Dashboard({ onLogout }) {
         onLogout={onLogout}
       />
 
-      {/* Content */}
+      <PhotoMosaic />
+
+      {/* Content — 80% de largeur, laisse 20% à droite pour la mosaïque */}
       <div style={{
-        maxWidth: 900, margin: '0 auto',
+        width: '80%',
+        maxWidth: 900,
         padding: '88px 32px 64px',
         boxSizing: 'border-box',
+        position: 'relative', zIndex: 1,
       }}>
         {activeModule === 'contrats' && <ContratModule />}
         {activeModule === 'budget' && <PlaceholderModule name="Budget" />}
