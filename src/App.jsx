@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import logo from '../Ressources/Images/henosis_logo_white.svg'
+import logo from './assets/logo.svg'
 
 // ─── THEME ────────────────────────────────────────────────────────────────────
 const T = {
