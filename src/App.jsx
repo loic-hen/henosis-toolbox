@@ -3,9 +3,6 @@ import logo from './assets/logo.svg'
 import photo1 from './assets/photo1.jpg'
 import photo2 from './assets/photo2.jpg'
 import photo3 from './assets/photo3.jpg'
-import photo4 from './assets/photo4.png'
-import photo5 from './assets/photo5.png'
-import photo6 from './assets/photo6.png'
 
 // ─── THEME ────────────────────────────────────────────────────────────────────
 const T = {
@@ -1008,8 +1005,8 @@ const mosaicKeyframes = `
 }
 `
 
-const colA = [photo1, photo3, photo5, photo1, photo3, photo5]
-const colB = [photo2, photo4, photo6, photo2, photo4, photo6]
+const colA = [photo1, photo2, photo3, photo1, photo2, photo3]
+const colB = [photo2, photo3, photo1, photo2, photo3, photo1]
 
 function PhotoMosaic() {
   return (
