@@ -80,7 +80,6 @@ html, body {
     overflow: visible;
   }
 }
-body { counter-reset: page 0; }
 @page cover {
   size: A4;
   margin: 0;
@@ -92,6 +91,7 @@ body { counter-reset: page 0; }
   margin: 12mm 20mm 12mm 20mm;
 }
 @page content {
+  counter-reset: page 0;
   counter-increment: page;
   @bottom-left {
     content: "Henosis SA · Chemin de Praël 1 · 1323 Romainmôtier · Suisse";
