@@ -5,3 +5,5 @@ dist/
 .env.*.local
 *.log
 .DS_Store
+src/assets/photo5.png
+src/assets/photo6.png

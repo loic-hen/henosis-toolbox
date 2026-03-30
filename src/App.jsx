@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import logo from './assets/logo.svg'
-import photo1 from '../Ressources/Images/Photos side/P1080378.jpg'
-import photo2 from '../Ressources/Images/Photos side/Nayan.jpg'
-import photo3 from '../Ressources/Images/Photos side/729A7453.jpg'
-import photo4 from '../Ressources/Images/Photos side/729A6222.png'
-import photo5 from '../Ressources/Images/Photos side/729A8406.png'
-import photo6 from '../Ressources/Images/Photos side/729A8880.png'
+import photo1 from './assets/photo1.jpg'
+import photo2 from './assets/photo2.jpg'
+import photo3 from './assets/photo3.jpg'
+import photo4 from './assets/photo4.png'
+import photo5 from './assets/photo5.png'
+import photo6 from './assets/photo6.png'
 
 // ─── THEME ────────────────────────────────────────────────────────────────────
 const T = {
