@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import logo from './assets/logo.png'
 
 // ─── THEME ────────────────────────────────────────────────────────────────────
 const T = {
@@ -6,8 +7,9 @@ const T = {
   surface: '#161616',
   surface2: '#1e1e1e',
   border: '#2a2a2a',
-  text: '#e8e6e1',
-  muted: '#8a8880',
+  text: '#ffffff',
+  muted: '#b0ada6',
+  dim: '#7a7770',
   accent: '#c8a97e',
   accentDim: 'rgba(200,169,126,0.12)',
   accentDimHover: 'rgba(200,169,126,0.2)',
@@ -243,14 +245,10 @@ function LoginPage({ onLogin }) {
       }}>
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
-          <div style={{
-            width: 56, height: 56, borderRadius: 14,
-            background: T.accentDim, border: `1px solid ${T.accent}`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            margin: '0 auto 16px', fontSize: 22,
-          }}>
-            ⚜️
-          </div>
+          <img src={logo} style={{
+            width: 72, height: 72, borderRadius: 14,
+            display: 'block', margin: '0 auto 16px',
+          }} />
           <div style={{ fontSize: 20, fontWeight: 700, color: T.accent, letterSpacing: '0.12em' }}>HENOSIS</div>
           <div style={{ fontSize: 11, color: T.muted, letterSpacing: '0.22em', marginTop: 2 }}>TOOLBOX</div>
         </div>
@@ -385,6 +383,78 @@ function ContratModule() {
   // Préambule
   const [preambule, setPreambule] = useState('')
   const [loadingIA, setLoadingIA] = useState(false)
+
+  // PDF generation
+  const [loadingPDF, setLoadingPDF] = useState(false)
+  const [errorPDF, setErrorPDF] = useState('')
+
+  const generatePDF = async () => {
+    setLoadingPDF(true)
+    setErrorPDF('')
+
+    const [year, month, day] = datePrestation.split('-')
+    const dateObj = new Date(Number(year), Number(month) - 1, Number(day))
+    const performanceDate = 'le ' + dateObj.toLocaleDateString('fr-FR', {
+      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+    })
+
+    const venueMap = {
+      henosis: 'au Centre culturel Henosis',
+      abbatiale: "dans l'Abbatiale de Romainmôtier",
+      jardins: "dans les Jardins d'Henosis",
+    }
+    const venueName = venueMap[lieu] ?? ('à ' + lieuCustom)
+
+    const paymentMap = {
+      avant: 'Le montant sera réglé avant la Prestation',
+      apres: 'Le montant sera réglé après la Prestation',
+      '30j': 'Le montant sera réglé dans les 30 jours suivant la Prestation',
+    }
+    const paymentTiming = paymentMap[momentPaiement] ?? momentPaiement
+
+    try {
+      const res = await fetch('https://henosis.app.n8n.cloud/webhook/generate-contract', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          artistName: nomGroupe,
+          artistRepresentative: hasRepresentant ? representant : '',
+          artistStreet: rue,
+          artistPostalCode: codePostal,
+          artistCity: ville,
+          artistCountry: pays,
+          preambleText: preambule,
+          performanceDate,
+          venueName,
+          duration: duree,
+          remunerationType: modeRemun === 'forfait' ? 'fixed' : modeRemun === 'variable' ? 'variable' : 'mixed',
+          amount: montantForfait,
+          currency: devise,
+          guaranteedMinimum: montantMin,
+          ticketThreshold: seuilBilleterie,
+          ticketPercentage: pourcentageBilleterie,
+          paymentTiming,
+          warmMeal: repasChaud,
+          drinks: boissons,
+          cancellationDelay: delaiAnnulation,
+        }),
+      })
+
+      if (!res.ok) throw new Error(`Erreur serveur : ${res.status}`)
+
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `contrat-${nomGroupe}-${datePrestation}.pdf`
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      setErrorPDF(err.message || 'Erreur lors de la génération du PDF')
+    } finally {
+      setLoadingPDF(false)
+    }
+  }
 
   const defaultPreambule = `L'Association Henosis, ci-après dénommée "l'Organisateur", et ${nomGroupe || '[Nom de l\'artiste]'}, ci-après dénommé "l'Artiste", ont conclu le présent contrat de prestation artistique dans un esprit de collaboration et de respect mutuel.\n\nLes deux parties s'engagent à honorer leurs obligations respectives avec professionnalisme et bonne foi.`
 
@@ -728,6 +798,16 @@ function ContratModule() {
       </div>
 
       {/* Navigation */}
+      {errorPDF && (
+        <div style={{
+          margin: '16px 0 0',
+          background: 'rgba(224,92,92,0.1)', border: '1px solid rgba(224,92,92,0.3)',
+          borderRadius: 8, padding: '10px 14px',
+          color: T.error, fontSize: 13,
+        }}>
+          {errorPDF}
+        </div>
+      )}
       <div style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         paddingTop: 20, borderTop: `1px solid ${T.border}`, marginTop: 20,
@@ -760,16 +840,18 @@ function ContratModule() {
           </button>
         ) : (
           <button
-            onClick={() => alert('Génération PDF en cours… (intégration n8n à brancher)')}
+            onClick={generatePDF}
+            disabled={loadingPDF}
             style={{
               display: 'flex', alignItems: 'center', gap: 8,
               padding: '9px 20px', borderRadius: 8, fontSize: 13, fontWeight: 700,
-              border: 'none', background: T.accent,
-              color: '#0d0d0d', cursor: 'pointer',
+              border: 'none', background: loadingPDF ? T.border : T.accent,
+              color: loadingPDF ? T.muted : '#0d0d0d',
+              cursor: loadingPDF ? 'not-allowed' : 'pointer',
               letterSpacing: '0.03em',
             }}
           >
-            Générer le PDF ↓
+            {loadingPDF ? 'Génération en cours…' : 'Générer le PDF ↓'}
           </button>
         )}
       </div>
@@ -835,14 +917,9 @@ function Sidebar({ collapsed, onToggle, activeModule, onModuleChange, onLogout }
           width: '100%',
         }}
       >
-        <div style={{
-          width: 28, height: 28, borderRadius: 7, flexShrink: 0,
-          background: T.accentDim, border: `1px solid ${T.accent}`,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 14,
-        }}>
-          ⚜️
-        </div>
+        <img src={logo} style={{
+          width: 36, height: 36, borderRadius: 8, flexShrink: 0,
+        }} />
         {!collapsed && (
           <div style={{ textAlign: 'left' }}>
             <div style={{ fontSize: 13, fontWeight: 700, color: T.accent, letterSpacing: '0.1em', lineHeight: 1 }}>HENOSIS</div>
