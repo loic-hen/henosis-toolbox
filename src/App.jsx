@@ -960,7 +960,7 @@ function Topbar({ activeModule, onModuleChange, onLogout }) {
                   background: 'transparent', border: 'none',
                   color: isActive ? T.text : m.soon ? T.border2 : T.muted,
                   fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
-                  fontWeight: 300, cursor: m.soon ? 'not-allowed' : 'pointer',
+                  fontWeight: 600, cursor: m.soon ? 'not-allowed' : 'pointer',
                   fontFamily: FONT, padding: '4px 0',
                   borderBottom: isActive ? `1px solid ${T.text}` : '1px solid transparent',
                   transition: 'color 0.15s',
