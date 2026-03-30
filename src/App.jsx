@@ -14,7 +14,7 @@ const T = {
   error: '#e05c5c',
 }
 
-const FONT = 'system-ui, -apple-system, sans-serif'
+const FONT = "'Campton', sans-serif"
 
 // ─── ICONS ────────────────────────────────────────────────────────────────────
 const IconContract = () => (
