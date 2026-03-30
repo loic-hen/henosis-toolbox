@@ -503,12 +503,12 @@ function ContratModule() {
     }
   }
 
-  const defaultPreambule = `L'Association Henosis, ci-après dénommée "l'Organisateur", et ${nomGroupe || '[Nom de l\'artiste]'}, ci-après dénommé "l'Artiste", ont conclu le présent contrat de prestation artistique dans un esprit de collaboration et de respect mutuel.\n\nLes deux parties s'engagent à honorer leurs obligations respectives avec professionnalisme et bonne foi.`
+  const defaultPreambule = `Henosis SA, ci-après dénommée "l'Organisateur", et ${nomGroupe || '[Nom de l\'artiste]'}, ci-après dénommé "l'Artiste", ont conclu le présent contrat de prestation artistique dans un esprit de collaboration et de respect mutuel.\n\nLes deux parties s'engagent à honorer leurs obligations respectives avec professionnalisme et bonne foi.`
 
   const simulateIA = async () => {
     setLoadingIA(true)
     await new Promise(r => setTimeout(r, 1800))
-    setPreambule(`L'Association Henosis, attachée à la promotion des arts vivants depuis sa fondation, a le plaisir d'accueillir ${nomGroupe || '[Nom de l\'artiste]'} dans le cadre de sa programmation culturelle.\n\nForts d'une vision partagée de l'excellence artistique, l'Organisateur et l'Artiste concluent le présent contrat avec la conviction que cet événement constituera une expérience mémorable pour le public comme pour les artistes.\n\nLes conditions énoncées ci-après reflètent les engagements réciproques des deux parties, établis dans un cadre juridique conforme au droit suisse des obligations.`)
+    setPreambule(`Henosis SA, attachée à la promotion des arts vivants depuis sa fondation, a le plaisir d'accueillir ${nomGroupe || '[Nom de l\'artiste]'} dans le cadre de sa programmation culturelle.\n\nForts d'une vision partagée de l'excellence artistique, l'Organisateur et l'Artiste concluent le présent contrat avec la conviction que cet événement constituera une expérience mémorable pour le public comme pour les artistes.\n\nLes conditions énoncées ci-après reflètent les engagements réciproques des deux parties, établis dans un cadre juridique conforme au droit suisse des obligations.`)
     setLoadingIA(false)
   }
 
@@ -781,13 +781,13 @@ function ContratModule() {
                 borderBottom: `1px solid ${T.border}`,
                 padding: '20px 24px', textAlign: 'center',
               }}>
-                <div style={{ fontSize: 10, color: T.muted, letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 300 }}>Association Henosis</div>
+                <div style={{ fontSize: 10, color: T.muted, letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 300 }}>Henosis SA</div>
                 <div style={{ fontSize: 15, fontWeight: 300, color: T.text, marginTop: 6, letterSpacing: '0.15em', textTransform: 'uppercase' }}>Contrat de prestation artistique</div>
               </div>
 
               <div style={{ padding: '24px' }}>
                 <ContractSection title="1. PARTIES">
-                  <ContractRow label="Organisateur" value="Association Henosis, tools.henosis.ch" />
+                  <ContractRow label="Organisateur" value="Henosis SA, tools.henosis.ch" />
                   <ContractRow label="Artiste" value={nomGroupe || '—'} />
                   {hasRepresentant && representant && <ContractRow label="Représentant" value={representant} />}
                   <ContractRow label="Adresse" value={[rue, `${codePostal} ${ville}`.trim(), pays].filter(Boolean).join(', ') || '—'} />
