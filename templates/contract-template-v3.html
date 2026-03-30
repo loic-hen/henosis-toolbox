@@ -84,22 +84,24 @@ body {
     overflow: visible;
   }
 }
-@page :first {
-  @bottom-left { content: none; }
-  @bottom-right { content: none; }
-}
 @page {
   size: A4;
-  margin: 12mm 20mm 12mm 20mm;
-  @bottom-left {
-    content: "Henosis SA · Chemin de Praël 1 · 1323 Romainmôtier · Suisse";
-    font-size: 7pt;
-  }
-  @bottom-right {
-    content: counter(page);
-    font-size: 8pt;
-    font-weight: bold;
-  }
+  margin: 12mm 20mm 18mm 20mm;
+}
+@page :first {
+  margin: 0;
+}
+.page-footer-html {
+  position: fixed;
+  bottom: 6mm;
+  left: 20mm;
+  right: 20mm;
+  border-top: 0.4pt solid #000;
+  padding-top: 2mm;
+  display: flex;
+  justify-content: space-between;
+  font-size: 7pt;
+  font-family: 'Campton', sans-serif;
 }
 
 /* ============================================================
@@ -613,6 +615,18 @@ body {
 
 
 </div>
+
+<div class="page-footer-html">
+  <span>Henosis SA · Chemin de Praël 1 · 1323 Romainmôtier · Suisse</span>
+  <span class="page-num"></span>
+</div>
+
+<script>
+  window.addEventListener('load', function() {
+    // Browserless injecte le numéro de page via son footerTemplate
+    // Ce script ne fait rien — le footer est géré par Browserless
+  });
+</script>
 
 </body>
 </html>
