@@ -248,6 +248,7 @@ function LoginPage({ onLogin }) {
           <img src={logo} style={{
             width: 72, height: 72, borderRadius: 14,
             display: 'block', margin: '0 auto 16px',
+            filter: 'invert(1)',
           }} />
           <div style={{ fontSize: 20, fontWeight: 700, color: T.accent, letterSpacing: '0.12em' }}>HENOSIS</div>
           <div style={{ fontSize: 11, color: T.muted, letterSpacing: '0.22em', marginTop: 2 }}>TOOLBOX</div>
@@ -292,9 +293,6 @@ function LoginPage({ onLogin }) {
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', fontSize: 11, color: T.muted, marginTop: 24, lineHeight: 1.6 }}>
-          Association Henosis · tools.henosis.ch
-        </p>
       </div>
     </div>
   )
