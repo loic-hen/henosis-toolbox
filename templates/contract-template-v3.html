@@ -80,7 +80,13 @@ html, body {
     overflow: visible;
   }
 }
-@page cover { size: A4; margin: 0; }
+body { counter-reset: page 0; }
+@page cover {
+  size: A4;
+  margin: 0;
+  @bottom-right { content: none; }
+  @bottom-left { content: none; }
+}
 @page {
   counter-increment: page;
   size: A4;
@@ -100,7 +106,7 @@ html, body {
    PAGE 1 — COVER
    ============================================================ */
 .page-cover {
-  counter-reset: page 0;
+  page: cover;
   position: relative;
   width: 210mm;
   height: 297mm;
