@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  /* ── RESET ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── PAGE ── */
+  @page {
+    size: A4;
+    margin-top: 2.8cm;
+    margin-bottom: 2.6cm;
+    margin-left: 2.5cm;
+    margin-right: 2.5cm;
+  }
+
+  /* ── BASE ── */
+  body {
+    font-family: 'Times New Roman', Times, Georgia, serif;
+    font-size: 10.5pt;
+    color: #111;
+    background: white;
+    line-height: 1.5;
+  }
+
+  /* ── RUNNING FOOTER (appears on every page) ── */
+  .page-footer {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 1.8cm;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5cm;
+    font-size: 7.5pt;
+    color: #aaa;
+    border-top: 0.3pt solid #ddd;
+    font-family: 'Times New Roman', serif;
+  }
+
+  /* ── PAGE BREAKS ── */
+  .page-break { page-break-after: always; }
+  .avoid-break { page-break-inside: avoid; }
+  .section { page-break-before: always; }
+
+  /* ── COVER ── */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 85vh;
+    text-align: center;
+  }
+  .cover-title {
+    font-size: 28pt;
+    font-weight: bold;
+    letter-spacing: .45em;
+    margin-bottom: .4cm;
+  }
+  .cover-subtitle {
+    font-size: 11pt;
+    letter-spacing: .2em;
+    color: #555;
+    margin-bottom: .2cm;
+  }
+  .cover-artist {
+    font-size: 13pt;
+    font-weight: bold;
+    letter-spacing: .12em;
+    margin-top: .3cm;
+  }
+  .cover-rule {
+    width: 7cm;
+    height: 1.5pt;
+    background: #111;
+    margin: .8cm auto .2cm;
+  }
+  .cover-rule-thin {
+    width: 7cm;
+    height: .4pt;
+    background: #555;
+    margin: 0 auto;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-title {
+    font-size: 13pt;
+    font-weight: bold;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    margin-top: 1.4em;
+    margin-bottom: .2em;
+  }
+  .section-rule {
+    height: 1.2pt;
+    background: #111;
+    margin-bottom: .7em;
+  }
+
+  /* ── ARTICLE ── */
+  .art-head {
+    font-size: 11.5pt;
+    font-weight: bold;
+    margin-top: 1.2em;
+    margin-bottom: .35em;
+  }
+
+  /* ── BODY TEXT ── */
+  .body-text {
+    text-align: justify;
+    margin-bottom: .3em;
+  }
+
+  /* ── ALINEA ── */
+  .alinea {
+    display: flex;
+    gap: .6em;
+    margin: .25em 0;
+    text-align: justify;
+  }
+  .ref {
+    font-weight: bold;
+    min-width: 2.4em;
+    flex-shrink: 0;
+    font-size: 10.5pt;
+  }
+  .alinea-text { flex: 1; }
+
+  /* ── VARIANT BOX ── */
+  .vbox {
+    border: .5pt solid #888;
+    padding: .5em .8em;
+    margin: .4em 0;
+  }
+  .vbox-label {
+    font-weight: bold;
+    font-size: 9.5pt;
+    color: #333;
+    margin-bottom: .3em;
+  }
+  .vbox p { text-align: justify; }
+
+  /* ── PARTIES ── */
+  .party-block { margin: .6em 0 1em; }
+  .party-name { font-weight: bold; font-size: 11pt; }
+  .party-role { font-style: italic; }
+
+  /* ── PREAMBLE ── */
+  .preamble {
+    min-height: 3cm;
+    text-align: justify;
+    white-space: pre-wrap;
+  }
+
+  /* ── SIGNATURES ── */
+  .sig-wrap {
+    display: flex;
+    gap: 1cm;
+    margin-top: .8cm;
+    flex-wrap: wrap;
+  }
+  .sig-col {
+    flex: 1;
+    min-width: 4.5cm;
+  }
+  .sig-title {
+    font-weight: bold;
+    font-size: 11pt;
+    margin-bottom: .6cm;
+  }
+  .sig-label {
+    font-size: 8.5pt;
+    color: #888;
+    margin-top: .5cm;
+  }
+  .sig-line {
+    border-bottom: .4pt solid #ccc;
+    margin-top: .3cm;
+    height: .3cm;
+  }
+  .sig-sign-space { height: 1.4cm; }
+</style>
+</head>
+<body>
+
+<!-- Running footer on every page -->
+<div class="page-footer">
+  <span>Henosis SA · Chemin de Praël 1 · 1323 Romainmôtier · Suisse</span>
+  <span></span>
+</div>
+
+<!-- ══ COVER ══════════════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-title">CONTRAT</div>
+  <div class="cover-subtitle">PRESTATION ARTISTIQUE</div>
+  <div class="cover-artist">{{artistName}}</div>
+  <div class="cover-rule"></div>
+  <div class="cover-rule-thin"></div>
+</div>
+<div class="page-break"></div>
+
+<!-- ══ PARTIES ════════════════════════════════════════════════════════════ -->
+<div class="section-title">PARTIES</div>
+<div class="section-rule"></div>
+
+<p class="body-text">Le présent contrat de prestation artistique (ci-après désigné le « Contrat ») est conclu entre</p>
+
+<div class="party-block">
+  <div class="party-name">Henosis SA</div>
+  Chemin de Praël 1<br>
+  1323 Romainmôtier<br>
+  Suisse<br>
+  <span class="party-role">(Ci-après désignée l'« Organisateur ».)</span>
+</div>
+
+<div class="party-block">
+  <div class="party-name" style="white-space:pre-line">{{artistRepresentativeBlock}}</div>
+  {{artistStreet}}<br>
+  {{artistPostalCode}} {{artistCity}}<br>
+  {{artistCountry}}<br>
+  <span class="party-role">(Ci-après désigné l'« Artiste »)</span>
+</div>
+
+<p class="body-text"><em>(Ci-après, l'Organisateur et l'Artiste sont individuellement désignés la « Partie » et collectivement les « Parties ».)</em></p>
+
+<!-- ══ PRÉAMBULE ══════════════════════════════════════════════════════════ -->
+<div class="section-title" style="margin-top:1.5em">PRÉAMBULE</div>
+<div class="section-rule"></div>
+<div class="preamble">{{preambleText}}</div>
+
+<div class="page-break"></div>
+
+<!-- ══ ACCORD ════════════════════════════════════════════════════════════ -->
+<div class="section-title">ACCORD</div>
+<div class="section-rule"></div>
+
+<!-- Art. 1 -->
+<div class="art-head avoid-break">Article 1 – Objet</div>
+<p class="body-text">L'Artiste s'engage à réaliser une prestation artistique (ci-après la « Prestation ») rémunérée et organisée par l'Organisateur le <strong>{{performanceDate}}</strong> {{venueFullName}}.</p>
+
+<!-- Art. 2 -->
+<div class="art-head avoid-break">Article 2 – Prestation</div>
+<div class="alinea"><span class="ref">2.1</span><span class="alinea-text">L'Artiste s'engage à effectuer la Prestation conformément à ce qu'elle a l'habitude de faire sur une scène professionnelle en Europe.</span></div>
+<div class="alinea"><span class="ref">2.2</span><span class="alinea-text">L'Artiste effectuera la Prestation d'une durée approximative de <strong>{{duration}} minutes</strong> et s'engage à ne pas véhiculer de propos discriminatoires ou contraires aux mœurs.</span></div>
+
+<!-- Art. 3 -->
+<div class="art-head avoid-break">Article 3 – Rémunération</div>
+<p class="body-text">{{remunerationClause}}</p>
+
+<!-- Art. 4 -->
+<div class="art-head avoid-break">Article 4 – Hébergement et déplacement</div>
+<p class="body-text">Les frais de déplacement et d'hébergement sont réputés faire partie intégrante de la rémunération prévue à l'article 3.</p>
+
+<!-- Art. 5 -->
+<div class="art-head avoid-break">Article 5 – Restauration</div>
+<div class="alinea"><span class="ref">5.1</span><span class="alinea-text">{{mealClause}}</span></div>
+<div class="alinea"><span class="ref">5.2</span><span class="alinea-text">{{allergiesClause}}</span></div>
+
+<!-- Art. 6 -->
+<div class="art-head avoid-break">Article 6 – Transport</div>
+{{transportClause}}
+
+<!-- Art. 7 -->
+<div class="art-head avoid-break">Article 7 – Badges d'accès</div>
+{{badgesClause}}
+
+<!-- Art. 8 -->
+<div class="art-head avoid-break">Article 8 – Personnes accompagnatrices</div>
+{{accompanyingPersonsClause}}
+
+<!-- Art. 9 -->
+<div class="art-head avoid-break">Article 9 – Comportement</div>
+<p class="body-text">L'Artiste s'engage à ne pas surconsommer de l'alcool ou d'autres produits ayant nature à impacter négativement le bon déroulement de la soirée.</p>
+
+<!-- Art. 10 -->
+<div class="art-head avoid-break">Article 10 – Enregistrement audiovisuel</div>
+{{avClause}}
+
+<!-- Art. 11 -->
+<div class="art-head avoid-break">Article 11 – Environnement technique</div>
+{{soundClause}}
+
+<!-- Art. 12 -->
+<div class="art-head avoid-break">Article 12 – Modalités d'organisation</div>
+<div class="alinea"><span class="ref">12.1</span><span class="alinea-text">L'Artiste devra arriver sur le lieu de la Prestation à l'heure convenue avec son correspondant chez l'Organisateur.</span></div>
+<div class="alinea"><span class="ref">12.2</span><span class="alinea-text">L'Artiste s'engage à collaborer avec le ou la responsable technique mis à disposition par l'Organisateur.</span></div>
+
+<!-- Art. 13 -->
+<div class="art-head avoid-break">Article 13 – Représentation par un Agent</div>
+{{agentClause}}
+
+<!-- Art. 14 -->
+<div class="art-head avoid-break">Article 14 – Droits d'auteur</div>
+<div class="alinea"><span class="ref">14.1</span><span class="alinea-text">L'Artiste déclare que la Prestation est composée d'œuvres qui lui sont propres ou appartenant au domaine public et déclare détenir ou être autorisé à faire usage des différents droits de propriété intellectuelle y afférents.</span></div>
+<div class="alinea"><span class="ref">14.2</span><span class="alinea-text">L'Artiste remplira le formulaire Suisa avec les morceaux joués pendant la Prestation.</span></div>
+
+<!-- Art. 15 -->
+<div class="art-head avoid-break">Article 15 – Déclaration d'assurance</div>
+<div class="alinea"><span class="ref">15.1</span><span class="alinea-text">L'Artiste déclare que lui-même ainsi que l'ensemble des membres réalisant la Prestation et les personnes composant son équipe technique et logistique sont titulaires d'une assurance maladie, d'une assurance accident et d'une assurance responsabilité civile valables pendant toute la durée de la Prestation.</span></div>
+<div class="alinea"><span class="ref">15.2</span><span class="alinea-text">L'Artiste s'engage à transmettre à l'Organisateur une copie de son attestation d'assurance responsabilité civile au minimum deux (2) mois avant la date de la Prestation.</span></div>
+<div class="alinea"><span class="ref">15.3</span><span class="alinea-text">L'Artiste s'engage à traiter avec soin l'ensemble des équipements, installations et locaux mis à sa disposition par l'Organisateur. En cas de dommage, de détérioration ou de perte, l'Artiste en informe l'Organisateur sans délai et s'engage à en assumer les conséquences conformément au droit applicable.</span></div>
+<div class="alinea"><span class="ref">15.4</span><span class="alinea-text">Le signataire du présent Contrat pour le compte de l'Artiste s'engage personnellement à assumer la responsabilité des actes et comportements de l'ensemble des membres du groupe, de l'équipe technique et de toute autre personne présente dans les locaux de l'Organisateur dans le cadre de la Prestation.</span></div>
+
+<!-- Art. 16 -->
+<div class="art-head avoid-break">Article 16 – Annulation et clause pénale</div>
+<div class="alinea"><span class="ref">16.1</span><span class="alinea-text">Si l'Artiste ou l'Organisateur annule la Prestation plus de {{cancellationDelay}} jours avant celle-ci, le Contrat est réputé annulé sans pénalité.</span></div>
+<div class="alinea"><span class="ref">16.2</span><span class="alinea-text">Si l'Artiste annule la Prestation moins de {{cancellationDelay}} jours avant la réalisation de celle-ci, il s'engage à proposer sans délai un groupe équivalent aux mêmes conditions. S'il n'est pas en mesure de le faire, il s'engage à payer le montant convenu pour la Prestation à l'Organisateur.</span></div>
+<div class="alinea"><span class="ref">16.3</span><span class="alinea-text">Si l'Organisateur annule la Prestation moins de {{cancellationDelay}} jours avant la réalisation de celle-ci, il s'engage à payer l'entièreté de la Prestation.</span></div>
+<div class="alinea"><span class="ref">16.4</span><span class="alinea-text">Si l'Artiste ne se présente pas le jour de la Prestation, celui-ci s'engage à payer le double du montant convenu à l'Organisateur.</span></div>
+
+<!-- Art. 17 -->
+<div class="art-head avoid-break">Article 17 – Dispositions générales</div>
+<div class="alinea"><span class="ref">17.1</span><span class="alinea-text"><strong>Accord complet.</strong> Le présent Contrat constitue l'intégralité de l'accord passé par les Parties en relation avec son objet et remplace tous les accords antérieurs.</span></div>
+<div class="alinea"><span class="ref">17.2</span><span class="alinea-text"><strong>Nullité partielle.</strong> Si une disposition du présent Contrat devait se révéler nulle ou inefficace, les Parties la remplaceront par une disposition produisant des effets aussi proches que possible. Le reste du Contrat restera en force.</span></div>
+<div class="alinea"><span class="ref">17.3</span><span class="alinea-text"><strong>Cession.</strong> Aucune des Parties ne pourra transférer le présent Contrat ou céder ses droits sans l'accord préalable écrit de l'autre Partie. Tout transfert effectué sans un tel accord sera nul.</span></div>
+<div class="alinea"><span class="ref">17.4</span><span class="alinea-text"><strong>Communication.</strong> Toute notification devra revêtir la forme écrite et être envoyée à l'autre Partie par e-mail ou courrier.</span></div>
+<div class="alinea"><span class="ref">17.5</span><span class="alinea-text"><strong>Modification.</strong> Le présent Contrat ne pourra être modifié si ce n'est par un accord écrit valablement signé par les Parties.</span></div>
+<div class="alinea"><span class="ref">17.6</span><span class="alinea-text"><strong>Absence de renonciation.</strong> Le fait pour une Partie de ne pas exercer un droit ne saurait être considéré comme une renonciation à ce droit. Une renonciation n'est valable qu'en la forme écrite.</span></div>
+<div class="alinea"><span class="ref">17.7</span><span class="alinea-text"><strong>Confidentialité.</strong> Chaque Partie s'engage à maintenir strictement confidentiels le présent Contrat et toutes les informations concernant l'autre Partie, sauf si requis par la loi, si les informations sont devenues publiques autrement qu'en raison d'une violation du Contrat, ou si communiquées à des conseils professionnels soumis à confidentialité.</span></div>
+<div class="alinea"><span class="ref">17.8</span><span class="alinea-text"><strong>Absence de société simple.</strong> Les Parties reconnaissent que le présent Contrat ne constitue pas et ne saurait être interprété comme un contrat de société simple.</span></div>
+
+<!-- Art. 18 -->
+<div class="art-head avoid-break">Article 18 – Droit applicable et for</div>
+<div class="alinea"><span class="ref">18.1</span><span class="alinea-text">Le présent Contrat est soumis au droit matériel suisse.</span></div>
+<div class="alinea"><span class="ref">18.2</span><span class="alinea-text">Pour tout litige en lien avec le présent Contrat, le for est au siège de l'Organisateur.</span></div>
+
+<!-- ══ SIGNATURES ═════════════════════════════════════════════════════════ -->
+<div class="page-break"></div>
+<div class="section-title">SIGNATURES</div>
+<div class="section-rule"></div>
+
+<div class="sig-wrap">
+  <div class="sig-col">
+    <div class="sig-title">Pour Henosis SA :</div>
+    <div class="sig-label">Lieu :</div><div class="sig-line"></div>
+    <div class="sig-label">Date :</div><div class="sig-line"></div>
+    <div class="sig-label">Signature :</div>
+    <div class="sig-sign-space"></div>
+    <div class="sig-line"></div>
+  </div>
+  <div class="sig-col">
+    <div class="sig-title">Pour {{artistName}} :</div>
+    <div class="sig-label">Lieu :</div><div class="sig-line"></div>
+    <div class="sig-label">Date :</div><div class="sig-line"></div>
+    <div class="sig-label">Signature :</div>
+    <div class="sig-sign-space"></div>
+    <div class="sig-line"></div>
+  </div>
+  {{agentSignatureBlock}}
+</div>
+
+</body>
+</html>
